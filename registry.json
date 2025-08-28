@@ -59,6 +59,28 @@
                     "path": "src/lib/registry/ui/data-grid/select-column.svelte"
                 }
             ]
+        },
+        {
+            "name": "data-grid",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "data-table",
+                "command",
+                "popover",
+                "button",
+                "separator",
+                "badge"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/data-grid-faceted-filter/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/data-grid-faceted-filter/data-table-faceted-filter.svelte"
+                }
+            ]
         }
     ]
 }
