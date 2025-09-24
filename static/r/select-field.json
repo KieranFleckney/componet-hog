@@ -1,0 +1,21 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "select-field",
+	"type": "registry:ui",
+	"registryDependencies": [
+		"./generic-field.json",
+		"select"
+	],
+	"files": [
+		{
+			"content": "export { default as SelectInput } from './select-input.svelte';",
+			"type": "registry:file",
+			"target": "select-field/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T,TData\">\n    import * as Select from '$lib/components/ui/select';\n    import type { BaseInputProps } from '$UI$/form';\n    import { GenericInput } from '$UI$/form-fields/generic-field';\n    import { type WithElementRef, type WithoutChildren, cn } from '$UTILS$';\n    import type { Component, Snippet } from 'svelte';\n    import type { HTMLAttributes } from 'svelte/elements';\n\n    type Props = {\n        class?: string;\n        items: TData[];\n        placeholder?: string;\n        toStringFunc?: (value: TData) => string;\n        toIdFunc?: (value: TData) => string;\n        disabledFunc?: (value: TData) => boolean;\n        itemTemplate?: Snippet<[TData, boolean, boolean]>;\n        icon?: Component;\n    };\n\n    let {\n        property,\n        context,\n        class: className,\n        ref = $bindable(null),\n        placeholder = 'Select a item',\n        items,\n        toStringFunc = (x) => x as string,\n        toIdFunc = (x) => (x ?? '') as string,\n        disabledFunc,\n        itemTemplate,\n        icon,\n        ...rest\n    }: Props &\n        BaseInputProps<T> &\n        WithoutChildren<WithElementRef<HTMLAttributes<HTMLElement>>> = $props();\n\n    function GetId(value: TData) {\n        if (!value) {\n            return '';\n        }\n\n        return toIdFunc(value);\n    }\n\n    function OnSelectSingle(selected: string): TData | undefined {\n        if (!selected) {\n            return;\n        }\n\n        const found = items.find((f) => toIdFunc(f) === selected);\n        if (!found) {\n            return;\n        }\n\n        return found;\n    }\n</script>\n\n<GenericInput {property} {context} {...rest}>\n    {#snippet control(field)}\n        <Select.Root\n            type=\"single\"\n            name={field.name}\n            bind:value={\n                () => GetId(field.state.value),\n                (e) => field.handleChange(OnSelectSingle(e))\n            }\n        >\n            <Select.Trigger\n                class={cn(className, 'w-full')}\n                {ref}\n                aria-invalid={field.state.meta.isValid ? undefined : 'true'}\n            >\n                {@const Icon = icon}\n                <div class=\"flex items-center w-full\">\n                    {#if icon}\n                        <Icon class=\"text-muted-foreground mr-[9px] size-6\" />\n                    {/if}\n                    {field.state.value\n                        ? toStringFunc(field.state.value)\n                        : placeholder}\n                </div>\n            </Select.Trigger>\n            <Select.Content>\n                <Select.Group>\n                    {#each items as item (toIdFunc(item))}\n                        <Select.Item\n                            value={toIdFunc(item)}\n                            label=\"{toStringFunc(item)}}\"\n                            disabled={disabledFunc?.(item) ?? false}\n                        >\n                            {#snippet children(pop)}\n                                {#if itemTemplate}\n                                    {@render itemTemplate(\n                                        item,\n                                        pop.selected,\n                                        pop.highlighted\n                                    )}\n                                {:else}\n                                    {toStringFunc(item)}\n                                {/if}\n                            {/snippet}\n                        </Select.Item>\n                    {/each}\n                </Select.Group>\n            </Select.Content>\n        </Select.Root>\n    {/snippet}\n</GenericInput>\n",
+			"type": "registry:file",
+			"target": "select-field/select-input.svelte"
+		}
+	]
+}

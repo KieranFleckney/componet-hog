@@ -1,0 +1,21 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "file-field",
+	"type": "registry:ui",
+	"registryDependencies": [
+		"./generic-field.json",
+		"./file-drop-zone.json"
+	],
+	"files": [
+		{
+			"content": "export { default as FileInput } from './file-input.svelte';",
+			"type": "registry:file",
+			"target": "file-field/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import {\n        FileDropZone,\n        type FileDropZoneProps,\n    } from '$UI$/file-drop-zone';\n    import type { BaseInputProps } from '$UI$/form';\n    import { GenericInput } from '$UI$/form-fields/generic-field';\n\n    type FileInputProps = Omit<FileDropZoneProps, 'onUpload'>;\n\n    let {\n        property,\n        context,\n        // ref = $bindable(null),\n        // class: className,\n        ...restProps\n    }: BaseInputProps<T> & FileInputProps = $props();\n</script>\n\n<GenericInput {property} {context} {...restProps}>\n    {#snippet control(field)}\n        <FileDropZone\n            {...restProps}\n            onUpload={async (e) => field.handleChange(e)}\n        />\n    {/snippet}\n</GenericInput>\n",
+			"type": "registry:file",
+			"target": "file-field/file-input.svelte"
+		}
+	]
+}

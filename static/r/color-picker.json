@@ -1,0 +1,26 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "color-picker",
+	"type": "registry:ui",
+	"dependencies": [
+		"svelte-awesome-color-picker",
+		"colord"
+	],
+	"files": [
+		{
+			"content": "export { default as ColorPicker } from './color-picker.svelte';\nexport { type ColorPickerProps } from './color-picker-props'\n\n",
+			"type": "registry:file",
+			"target": "color-picker/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\">\n    import ColorPicker from 'svelte-awesome-color-picker';\n    import { type ColorPickerProps } from './color-picker-props';\n\n    let { color = $bindable(), ...restProps }: ColorPickerProps = $props();\n</script>\n\n<div class=\"color-picker-theme\">\n    <ColorPicker {...restProps} bind:color />\n</div>\n\n<style>\n    .color-picker-theme {\n        --cp-bg-color: var(--popover);\n        --cp-border-color: transparent;\n        --cp-text-color: var(--foreground);\n        --cp-input-color: var(--input);\n        --cp-button-hover-color: var(--accent);\n    }\n</style>\n",
+			"type": "registry:file",
+			"target": "color-picker/color-picker.svelte"
+		},
+		{
+			"content": "import {\n    type HsvaColor,\n    type RgbaColor,\n} from 'svelte-awesome-color-picker';\nimport { Colord } from 'colord';\n\nexport type ColorPickerProps = {\n    /** input label, hidden when the ColorPicker is always shown (prop `isDialog={false}`) */\n    label?: string;\n    /** input name, useful in a native form */\n    name?: string | undefined;\n    /** if set to true, the color picker becomes nullable (rgb, hsv and hex set to undefined) */\n    nullable?: boolean;\n    /** rgb color */\n    rgb?: RgbaColor | null;\n    /** hsv color */\n    hsv?: HsvaColor | null;\n    /** hex color */\n    hex?: string | null;\n    /** Colord color */\n    color?: Colord | null;\n    /** indicator whether the selected color is light or dark */\n    isDark?: boolean;\n    /** if set to false, disables the alpha channel */\n    isAlpha?: boolean;\n    /** if set to false, the input and the label will not be displayed and the ColorPicker will always be visible */\n    isDialog?: boolean;\n    /** indicator of the popup state */\n    isOpen?: boolean;\n    /** if set to \"responsive\", the popup will adjust its x and y position depending on the available window space, \"responsive-x\" and \"responsive-y\" limit the behavior to either the x or y axis */\n    position?: 'fixed' | 'responsive' | 'responsive-x' | 'responsive-y';\n    /** directionality left to right, or right to left*/\n    dir?: 'ltr' | 'rtl';\n    /** if set to false, hide the hex, rgb and hsv text inputs */\n    isTextInput?: boolean;\n    /** configure which hex, rgb and hsv inputs will be visible and in which order. If overridden, it is necessary to provide at least one value */\n    textInputModes?: Array<'hex' | 'rgb' | 'hsv'>;\n    /** If set to \"horizontal\", the hue and alpha sliders will be displayed horizontally. It is necessary to set this props to \"horizontal\" for the ChromeVariant */\n    sliderDirection?: 'horizontal' | 'vertical';\n    /** If set to true, it will not be possible to close the color picker by clicking outside */\n    disableCloseClickOutside?: boolean;\n    /** listener, dispatch an event when the color changes */\n    onInput?:\n    | ((color: {\n        hsv: HsvaColor | null;\n        rgb: RgbaColor | null;\n        hex: string | null;\n        color: Colord | null;\n    }) => void)\n    | undefined;\n};",
+			"type": "registry:file",
+			"target": "color-picker/color-picker-props.ts"
+		}
+	]
+}

@@ -1,0 +1,35 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "date-picker",
+	"type": "registry:ui",
+	"dependencies": [
+		"@internationalized/date"
+	],
+	"devDependencies": [
+		"@internationalized/date@^3.9.0",
+		"@lucide/svelte@^0.544.0",
+		"bits-ui@^2.11.3"
+	],
+	"registryDependencies": [
+		"button",
+		"popover",
+		"calendar"
+	],
+	"files": [
+		{
+			"content": "export { default as DatePicker } from './date-picker.svelte'\nexport type { DatePickerProps } from './date-picker-props'",
+			"type": "registry:file",
+			"target": "date-picker/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\">\n    import { Button, buttonVariants } from '$lib/components/ui/button/index.js';\n    import { Calendar } from '$lib/components/ui/calendar/index.js';\n    import * as Popover from '$lib/components/ui/popover/index.js';\n    import { cn } from '$UTILS$.js';\n    import {\n        DateFormatter,\n        type DateValue,\n        getLocalTimeZone,\n    } from '@internationalized/date';\n    import CalendarIcon from '@lucide/svelte/icons/calendar';\n    import ChevronDown from '@lucide/svelte/icons/chevron-down';\n    import type { DatePickerProps } from './date-picker-props';\n\n    let {\n        date = $bindable(undefined),\n        locale = navigator.language,\n        onValueChanged,\n        buttonDateFormat = 'long',\n        weekdayFormat = 'short',\n        captionLayout = 'dropdown',\n        buttonVariant = 'ghost',\n        months: monthsProp,\n        years,\n        monthFormat: monthFormatProp,\n        yearFormat = 'numeric',\n        day,\n        disableDaysOutsideMonth = false,\n        isDateDisabled,\n        isDateUnavailable,\n        class: className,\n        ...props\n    }: DatePickerProps = $props();\n\n    const df = new DateFormatter(locale, {\n        dateStyle: buttonDateFormat,\n    });\n\n    let open = $state(false);\n\n    function OnValueChanged(value?: DateValue) {\n        open = false;\n        onValueChanged?.(value);\n    }\n</script>\n\n<Popover.Root bind:open>\n    <Popover.Trigger\n        {...props}\n        class={cn(\n            buttonVariants({\n                variant: 'outline',\n                class: 'justify-start text-left font-normal',\n            }),\n            !date && 'text-muted-foreground',\n            className\n        )}\n    >\n        {#snippet child({ props })}\n            <Button {...props} variant=\"outline\">\n                <CalendarIcon />\n                {date\n                    ? df.format(date.toDate(getLocalTimeZone()))\n                    : 'Select date'}\n                <ChevronDown class={'ml-auto'} />\n            </Button>\n        {/snippet}\n    </Popover.Trigger>\n    <Popover.Content class=\"w-auto overflow-hidden p-0\" align=\"start\">\n        <Calendar\n            type=\"single\"\n            bind:value={date}\n            onValueChange={OnValueChanged}\n            {locale}\n            {weekdayFormat}\n            {captionLayout}\n            {buttonVariant}\n            months={monthsProp}\n            {years}\n            monthFormat={monthFormatProp}\n            {yearFormat}\n            {day}\n            {disableDaysOutsideMonth}\n            {isDateDisabled}\n            {isDateUnavailable}\n        />\n    </Popover.Content>\n</Popover.Root>\n",
+			"type": "registry:file",
+			"target": "date-picker/date-picker.svelte"
+		},
+		{
+			"content": "import type { DateValue } from \"@internationalized/date\";\nimport { Calendar as CalendarPrimitive, type DateMatcher } from 'bits-ui';\nimport { Popover as PopoverPrimitive } from 'bits-ui';\nimport { type ButtonVariant } from '$lib/components/ui/button/button.svelte';\nimport type { Snippet } from \"svelte\";\n\nexport type DatePickerProps = {\n    date?: DateValue;\n    locale?: string;\n    onValueChanged?: (value: DateValue | undefined) => void;\n    buttonDateFormat?: 'full' | 'long' | 'medium' | 'short';\n    weekdayFormat?: Intl.DateTimeFormatOptions['weekday'];\n    buttonVariant?: ButtonVariant;\n    captionLayout?:\n    | 'dropdown'\n    | 'dropdown-months'\n    | 'dropdown-years'\n    | 'label';\n    months?: CalendarPrimitive.MonthSelectProps['months'];\n    years?: CalendarPrimitive.YearSelectProps['years'];\n    monthFormat?: CalendarPrimitive.MonthSelectProps['monthFormat'];\n    yearFormat?: CalendarPrimitive.YearSelectProps['yearFormat'];\n    day?: Snippet<[{ day: DateValue; outsideMonth: boolean }]>;\n    disableDaysOutsideMonth?: boolean;\n    isDateDisabled?: DateMatcher;\n    isDateUnavailable?: DateMatcher;\n} & PopoverPrimitive.TriggerProps;",
+			"type": "registry:file",
+			"target": "date-picker/date-picker-props.ts"
+		}
+	]
+}

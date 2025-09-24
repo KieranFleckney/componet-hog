@@ -1,0 +1,26 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "checkbox-field",
+	"type": "registry:ui",
+	"devDependencies": [
+		"bits-ui@^2.11.3",
+		"@internationalized/date@^3.9.0"
+	],
+	"registryDependencies": [
+		"./generic-field.json",
+		"checkbox",
+		"label"
+	],
+	"files": [
+		{
+			"content": "export { default as CheckboxInput } from './checkbox-input.svelte';",
+			"type": "registry:file",
+			"target": "checkbox-field/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import { Checkbox } from '$lib/components/ui/checkbox';\n    import { Label } from '$lib/components/ui/label';\n    import {\n        type BaseInputProps,\n        FieldErrors,\n        FormDescription,\n        FormLabel,\n    } from '$UI$/form';\n    import { GenericInput } from '$UI$/form-fields/generic-field';\n    import { type WithoutChildrenOrChild } from '$UTILS$';\n    import { Checkbox as CheckboxPrimitive } from 'bits-ui';\n\n    let {\n        property,\n        context,\n        ref = $bindable(null),\n        value = $bindable(),\n        class: className,\n        ...restProps\n    }: BaseInputProps<T> &\n        WithoutChildrenOrChild<CheckboxPrimitive.RootProps> = $props();\n</script>\n\n<GenericInput {property} {context} {...restProps}>\n    {#snippet custom(field)}\n        <Label\n            class=\"flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-invalid=true]]:border-destructive\"\n        >\n            <Checkbox\n                bind:ref\n                bind:checked={\n                    () => field.state.value, (e) => field.handleChange(e)\n                }\n                name={field.name}\n                id={field.name}\n                onblur={field.handleBlur}\n                class={className}\n                aria-invalid={field.state.meta.isValid ? undefined : 'true'}\n                {...restProps}\n            />\n            <div class=\"grid gap-1.5 font-normal\">\n                <FormLabel {context} {property} {field} {...restProps} />\n                <FormDescription {context} {property} {field} {...restProps} />\n                <FieldErrors {context} {property} {field} {...restProps} />\n            </div>\n        </Label>\n    {/snippet}\n</GenericInput>\n",
+			"type": "registry:file",
+			"target": "checkbox-field/checkbox-input.svelte"
+		}
+	]
+}

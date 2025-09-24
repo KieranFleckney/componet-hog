@@ -1,0 +1,1 @@
+export { default as SwitchInput } from './switch-input.svelte';

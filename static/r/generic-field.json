@@ -1,0 +1,20 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "generic-field",
+	"type": "registry:ui",
+	"registryDependencies": [
+		"./form.json"
+	],
+	"files": [
+		{
+			"content": "export { default as GenericInput } from './generic-input.svelte';",
+			"type": "registry:file",
+			"target": "generic-field/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import {\n        type BaseInputProps,\n        FieldErrors,\n        FormDescription,\n        FormLabel,\n        type GenericInputProps,\n    } from '$UI$/form';\n    import { cn } from '$UTILS$';\n\n    let {\n        property,\n        context,\n        control,\n        custom,\n        ...restProps\n    }: GenericInputProps<T> & BaseInputProps<T> = $props();\n\n    const form = context.form;\n</script>\n\n<form.Field name={property}>\n    {#snippet children(field)}\n        <div data-slot=\"form-item\" class={cn('space-y-2', restProps.itemClass)}>\n            {#if custom}\n                {@render custom?.(field)}\n            {:else}\n                <FormLabel {context} {property} {field} {...restProps} />\n                {@render control?.(field)}\n                <FormDescription {context} {property} {field} {...restProps} />\n                <FieldErrors {context} {property} {field} {...restProps} />\n            {/if}\n        </div>\n    {/snippet}\n</form.Field>\n",
+			"type": "registry:file",
+			"target": "generic-field/generic-input.svelte"
+		}
+	]
+}

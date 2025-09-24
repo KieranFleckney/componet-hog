@@ -61,7 +61,7 @@
             ]
         },
         {
-            "name": "data-grid",
+            "name": "data-grid-faceted",
             "type": "registry:ui",
             "registryDependencies": [
                 "data-table",
@@ -79,6 +79,435 @@
                 {
                     "type": "registry:file",
                     "path": "src/lib/registry/ui/data-grid-faceted-filter/data-table-faceted-filter.svelte"
+                }
+            ]
+        },
+        {
+            "name": "form",
+            "type": "registry:ui",
+            "dependencies": [
+                "@tanstack/svelte-form"
+            ],
+            "registryDependencies": [
+                "label"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-array.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-context.svelte.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-field-error.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-field-set.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-label.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-legend.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form.svelte"
+                },
+                {
+                    "type": "registry:lib",
+                    "path": "src/lib/registry/lib/fluentvalidation-adapter.ts"
+                }
+            ]
+        },
+        {
+            "name": "copy-button",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "button"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/copy-button/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/copy-button/copy-button.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/copy-button/types.ts"
+                },
+                {
+                    "type": "registry:hook",
+                    "path": "src/lib/registry/hooks/use-clipboard.svelte.ts"
+                }
+            ]
+        },
+        {
+            "name": "password",
+            "type": "registry:ui",
+            "dependencies": [
+                "svelte-toolbelt",
+                "@zxcvbn-ts/core",
+                "@zxcvbn-ts/language-common",
+                "@zxcvbn-ts/language-en",
+                "bits-ui"
+            ],
+            "registryDependencies": [
+                "local:copy-button",
+                "input"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password-copy.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password-input.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password-strength.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password-toggle-visibility.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/password.svelte.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/password/types.ts"
+                }
+            ]
+        },
+        {
+            "name": "date-picker",
+            "type": "registry:ui",
+            "dependencies": [
+                "@internationalized/date"
+            ],
+            "registryDependencies": [
+                "button",
+                "popover",
+                "calendar"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/date-picker/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/date-picker/date-picker.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/date-picker/date-picker-props.ts"
+                }
+            ]
+        },
+        {
+            "name": "color-picker",
+            "type": "registry:ui",
+            "dependencies": [
+                "svelte-awesome-color-picker",
+                "colord"
+            ],
+            "registryDependencies": [],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/color-picker/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/color-picker/color-picker.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/color-picker/color-picker-props.ts"
+                }
+            ]
+        },
+        {
+            "name": "file-drop-zone",
+            "type": "registry:ui",
+            "dependencies": [
+                "bits-ui"
+            ],
+            "registryDependencies": [
+                "button"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/file-drop-zone/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/file-drop-zone/file-drop-zone.svelte"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/file-drop-zone/types.ts"
+                }
+            ]
+        },
+        {
+            "name": "generic-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:form"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/generic-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/generic-field/generic-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "text-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "input"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/text-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/text-field/text-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "textarea-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "textarea"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/textarea-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/textarea-field/textarea-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "toggle-group-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "toggle-group"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/toggle-group-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/toggle-group-field/toggle-group-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "checkbox-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "checkbox",
+                "label"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/checkbox-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/checkbox-field/checkbox-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "color-picker-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "local:color-picker"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/color-picker-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/color-picker-field/color-picker-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "date-picker-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "local:date-picker"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/date-picker-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/date-picker-field/date-picker-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "file-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "local:file-drop-zone"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/file-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/file-field/file-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "multi-select-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "select"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/multi-select-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/multi-select-field/multi-select-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "password-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "local:password"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/password-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/password-field/password-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "radio-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "radio-group"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/radio-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/radio-field/radio-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "select-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "select"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/select-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/select-field/select-input.svelte"
+                }
+            ]
+        },
+        {
+            "name": "switch-field",
+            "type": "registry:ui",
+            "registryDependencies": [
+                "local:generic-field",
+                "switch"
+            ],
+            "files": [
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/switch-field/index.ts"
+                },
+                {
+                    "type": "registry:file",
+                    "path": "src/lib/registry/ui/form-fields/switch-field/switch-input.svelte"
                 }
             ]
         }

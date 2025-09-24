@@ -1,0 +1,53 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "form",
+	"type": "registry:ui",
+	"dependencies": [
+		"@tanstack/svelte-form"
+	],
+	"registryDependencies": [
+		"label"
+	],
+	"files": [
+		{
+			"content": "export { default as Form } from './form.svelte';\nexport { default as FormLabel } from './form-label.svelte';\nexport { default as FormDescription } from './form-description.svelte';\nexport { default as FieldErrors } from './form-field-error.svelte';\nexport { default as FieldSet } from './form-field-set.svelte';\nexport { default as FieldLegend } from './form-legend.svelte';\nexport { default as FormArray } from './form-array.svelte';\nexport type { BaseInputProps, FieldType, FormContext, GenericInputProps } from './form-context.svelte.ts';\n",
+			"type": "registry:file",
+			"target": "form/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import type { Snippet } from 'svelte';\n    import type { BaseInputProps } from './form-context.svelte';\n    import type { DeepKeys } from '@tanstack/svelte-form';\n\n    let {\n        property,\n        context,\n        template,\n        ...restProps\n    }: { template: Snippet<[DeepKeys<T>]> } & BaseInputProps<T> = $props();\n\n    const form = context.form;\n\n    function GetIndexFieldName(\n        property: DeepKeys<T>,\n        index: number\n    ): DeepKeys<T> {\n        return property + '[' + index + ']';\n    }\n</script>\n\n<form.Field name={property} mode=\"array\">\n    {#snippet children(field)}\n        {#each field.state.value as ArrayLike<unknown> as _, i}\n            {@render template?.(GetIndexFieldName(property, i))}\n        {/each}\n    {/snippet}\n</form.Field>\n",
+			"type": "registry:file",
+			"target": "form/form-array.svelte"
+		},
+		{
+			"content": "import {\n    type DeepKeys,\n    FieldApi,\n    FormApi,\n    type StandardSchemaV1,\n    type SvelteFormApi,\n    createForm,\n    formOptions,\n    revalidateLogic,\n} from '@tanstack/svelte-form';\nimport type { Snippet } from 'svelte';\n\nexport const DATA_GRID_CONTEXT = Symbol('form-context');\n\nexport interface FormProps<T> {\n    defaultValues: T;\n    fields: Snippet<[FormContext<T>]>;\n    OnSubmit: (value: T) => void;\n    validator?: StandardSchemaV1<T>;\n    enableBrowserValidation?: boolean;\n}\n\nexport class FormContext<T> {\n    form: FormApi<T, any, any, any, any, any, any, any, any, any, any, any> &\n        SvelteFormApi<T, any, any, any, any, any, any, any, any, any, any, any>;\n\n    constructor(props: FormProps<T>) {\n        const formOpts = formOptions({\n            defaultValues: props.defaultValues,\n        });\n\n        this.form = createForm(() => ({\n            ...formOpts,\n            onSubmit: async ({ value }) => {\n                props.OnSubmit(value);\n            },\n            validationLogic: revalidateLogic({\n                mode: 'submit',\n                modeAfterSubmission: 'change',\n            }),\n            validators: {\n                onDynamic: props.validator,\n            },\n        }));\n    }\n}\n\nexport type FieldType<T> = FieldApi<T, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any, any>\n\nexport type GenericInputProps<T> = {\n    control?: Snippet<[FieldType<T>]>;\n    custom?: Snippet<[FieldType<T>]>;\n    required?: boolean | null | undefined;\n};\n\nexport type BaseInputProps<T> = {\n    property: DeepKeys<T>;\n    context: FormContext<T>;\n    label?: string;\n    description?: string;\n\n    labelClass?: string;\n    descriptionClass?: string;\n    itemClass?: string;\n    errorFieldClass?: string\n    errorClass?: string\n};",
+			"type": "registry:file",
+			"target": "form/form-context.svelte.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n\timport { cn } from '$UTILS$';\n\timport type { BaseInputProps, FieldType } from './form-context.svelte';\n\n\tlet { field, errorFieldClass, errorClass }: { field: FieldType<T> } & BaseInputProps<T> =\n\t\t$props();\n</script>\n\n{#if !field.state.meta.isValid}\n\t<div class={cn('text-sm font-medium text-destructive', errorFieldClass)}>\n\t\t{#each field.state.meta.errors as e}\n\t\t\t<div class={cn(errorClass)}>{e.message}</div>\n\t\t{/each}\n\t</div>\n{/if}\n",
+			"type": "registry:file",
+			"target": "form/form-field-error.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n    import { cn, type WithElementRef } from '$UTILS$.js';\n    import type { HTMLAttributes } from 'svelte/elements';\n    let {\n        ref = $bindable(null),\n        class: className,\n        children,\n        ...restProps\n    }: WithElementRef<HTMLAttributes<HTMLFieldSetElement>> = $props();\n</script>\n\n<fieldset bind:this={ref} class={cn('space-y-2', className)} {...restProps}>\n    {@render children?.()}\n</fieldset>\n",
+			"type": "registry:file",
+			"target": "form/form-field-set.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import Label from '$lib/components/ui/label/label.svelte';\n    import { cn } from '$UTILS$';\n    import type { BaseInputProps, FieldType } from './form-context.svelte';\n\n    let {\n        field,\n        label,\n        labelClass,\n        required,\n    }: {\n        field: FieldType<T>;\n        required?: boolean | null | undefined;\n    } & BaseInputProps<T> = $props();\n</script>\n\n{#if label}\n    <Label\n        data-slot=\"form-label\"\n        aria-invalid={field.state.meta.isValid ? undefined : 'true'}\n        class={cn('aria-invalid:text-destructive', labelClass)}\n        for={field.name}\n    >\n        {label}\n        {#if required}\n            *\n        {/if}\n    </Label>\n{/if}\n",
+			"type": "registry:file",
+			"target": "form/form-label.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\">\n    import { cn, type WithElementRef } from '$UTILS$.js';\n    import type { HTMLAttributes } from 'svelte/elements';\n\n    let {\n        ref = $bindable(null),\n        class: className,\n        children,\n        ...restProps\n    }: WithElementRef<HTMLAttributes<HTMLLegendElement>> = $props();\n</script>\n\n<legend\n    bind:this={ref}\n    class={cn(\n        'data-[fs-error]:text-destructive text-sm font-medium leading-none',\n        className\n    )}\n    {...restProps}\n>\n    {@render children?.()}\n</legend>\n",
+			"type": "registry:file",
+			"target": "form/form-legend.svelte"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import { FormContext, type FormProps } from './form-context.svelte';\n\n    let props: FormProps<T> = $props();\n    const context = new FormContext(props);\n\n    //TODO:\n    //Nice to have:\n    // - combox (I decided not to do this is as all are bit different, I might make a generic one for simple cases)\n    // - error summary???\n    // - time picker\n    // - date range picker\n    // - tag input\n    // - phone\n    // - slider\n    // - location\n    // - input OTP\n</script>\n\n<form\n    onsubmit={(e) => {\n        e.preventDefault();\n        e.stopPropagation();\n        context.form.handleSubmit();\n    }}\n    class={'flex flex-col gap-4'}\n    novalidate={props.enableBrowserValidation ?? true}\n>\n    {@render props.fields?.(context)}\n</form>\n",
+			"type": "registry:file",
+			"target": "form/form.svelte"
+		}
+	]
+}

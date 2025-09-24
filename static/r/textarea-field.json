@@ -1,0 +1,21 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "textarea-field",
+	"type": "registry:ui",
+	"registryDependencies": [
+		"./generic-field.json",
+		"textarea"
+	],
+	"files": [
+		{
+			"content": "export { default as TextareaInput } from './textarea-input.svelte';",
+			"type": "registry:file",
+			"target": "textarea-field/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"T\">\n    import { Textarea } from '$lib/components/ui/textarea';\n    import { type BaseInputProps } from '$UI$/form';\n    import { GenericInput } from '$UI$/form-fields/generic-field';\n    import { type WithElementRef, type WithoutChildren } from '$UTILS$';\n    import type { HTMLTextareaAttributes } from 'svelte/elements';\n\n    let {\n        property,\n        context,\n        ref = $bindable(null),\n        value = $bindable(),\n        class: className,\n        ...restProps\n    }: BaseInputProps<T> &\n        WithoutChildren<WithElementRef<HTMLTextareaAttributes>> = $props();\n</script>\n\n<GenericInput {property} {context} {...restProps}>\n    {#snippet control(field)}\n        <Textarea\n            bind:ref\n            bind:value={() => field.state.value, (e) => field.handleChange(e)}\n            name={field.name}\n            id={field.name}\n            onblur={field.handleBlur}\n            class={className}\n            aria-invalid={field.state.meta.isValid ? undefined : 'true'}\n            {...restProps}\n        />\n    {/snippet}\n</GenericInput>\n",
+			"type": "registry:file",
+			"target": "textarea-field/textarea-input.svelte"
+		}
+	]
+}

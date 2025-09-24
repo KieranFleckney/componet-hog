@@ -13,7 +13,7 @@
 		"relativeUrl": "data-grid.json"
 	},
 	{
-		"name": "data-grid",
+		"name": "data-grid-faceted",
 		"type": "registry:ui",
 		"registryDependencies": [
 			"data-table",
@@ -23,6 +23,192 @@
 			"separator",
 			"badge"
 		],
-		"relativeUrl": "data-grid.json"
+		"relativeUrl": "data-grid-faceted.json"
+	},
+	{
+		"name": "form",
+		"type": "registry:ui",
+		"dependencies": [
+			"@tanstack/svelte-form"
+		],
+		"registryDependencies": [
+			"label"
+		],
+		"relativeUrl": "form.json"
+	},
+	{
+		"name": "copy-button",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "copy-button.json"
+	},
+	{
+		"name": "password",
+		"type": "registry:ui",
+		"dependencies": [
+			"svelte-toolbelt",
+			"@zxcvbn-ts/core",
+			"@zxcvbn-ts/language-common",
+			"@zxcvbn-ts/language-en",
+			"bits-ui"
+		],
+		"registryDependencies": [
+			"local:copy-button",
+			"input"
+		],
+		"relativeUrl": "password.json"
+	},
+	{
+		"name": "date-picker",
+		"type": "registry:ui",
+		"dependencies": [
+			"@internationalized/date"
+		],
+		"registryDependencies": [
+			"button",
+			"popover",
+			"calendar"
+		],
+		"relativeUrl": "date-picker.json"
+	},
+	{
+		"name": "color-picker",
+		"type": "registry:ui",
+		"dependencies": [
+			"svelte-awesome-color-picker",
+			"colord"
+		],
+		"registryDependencies": [],
+		"relativeUrl": "color-picker.json"
+	},
+	{
+		"name": "file-drop-zone",
+		"type": "registry:ui",
+		"dependencies": [
+			"bits-ui"
+		],
+		"registryDependencies": [
+			"button"
+		],
+		"relativeUrl": "file-drop-zone.json"
+	},
+	{
+		"name": "generic-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:form"
+		],
+		"relativeUrl": "generic-field.json"
+	},
+	{
+		"name": "text-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"input"
+		],
+		"relativeUrl": "text-field.json"
+	},
+	{
+		"name": "textarea-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"textarea"
+		],
+		"relativeUrl": "textarea-field.json"
+	},
+	{
+		"name": "toggle-group-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"toggle-group"
+		],
+		"relativeUrl": "toggle-group-field.json"
+	},
+	{
+		"name": "checkbox-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"checkbox",
+			"label"
+		],
+		"relativeUrl": "checkbox-field.json"
+	},
+	{
+		"name": "color-picker-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"local:color-picker"
+		],
+		"relativeUrl": "color-picker-field.json"
+	},
+	{
+		"name": "date-picker-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"local:date-picker"
+		],
+		"relativeUrl": "date-picker-field.json"
+	},
+	{
+		"name": "file-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"local:file-drop-zone"
+		],
+		"relativeUrl": "file-field.json"
+	},
+	{
+		"name": "multi-select-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"select"
+		],
+		"relativeUrl": "multi-select-field.json"
+	},
+	{
+		"name": "password-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"local:password"
+		],
+		"relativeUrl": "password-field.json"
+	},
+	{
+		"name": "radio-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"radio-group"
+		],
+		"relativeUrl": "radio-field.json"
+	},
+	{
+		"name": "select-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"select"
+		],
+		"relativeUrl": "select-field.json"
+	},
+	{
+		"name": "switch-field",
+		"type": "registry:ui",
+		"registryDependencies": [
+			"local:generic-field",
+			"switch"
+		],
+		"relativeUrl": "switch-field.json"
 	}
 ]

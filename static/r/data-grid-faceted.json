@@ -1,0 +1,29 @@
+{
+	"$schema": "https://shadcn-svelte.com/schema/registry-item.json",
+	"name": "data-grid-faceted",
+	"type": "registry:ui",
+	"devDependencies": [
+		"@lucide/svelte@^0.544.0",
+		"@tanstack/table-core@^8.21.3"
+	],
+	"registryDependencies": [
+		"data-table",
+		"command",
+		"popover",
+		"button",
+		"separator",
+		"badge"
+	],
+	"files": [
+		{
+			"content": "export {default as DataGridFacetFilter} from './data-table-faceted-filter.svelte'",
+			"type": "registry:file",
+			"target": "data-grid-faceted/index.ts"
+		},
+		{
+			"content": "<script lang=\"ts\" generics=\"TData, TValue\">\n\timport CirclePlusIcon from '@lucide/svelte/icons/circle-plus';\n\timport CheckIcon from '@lucide/svelte/icons/check';\n\timport type { Column } from '@tanstack/table-core';\n\timport { SvelteSet } from 'svelte/reactivity';\n\timport * as Command from '$lib/components/ui/command';\n\timport * as Popover from '$lib/components/ui/popover';\n\timport { Button } from '$lib/components/ui/button';\n\timport { cn } from '$UTILS$.js';\n\timport { Separator } from '$lib/components/ui/separator';\n\timport { Badge } from '$lib/components/ui/badge';\n\timport type { Component } from 'svelte';\n\n\ttype mapData = {\n\t\tvalue: string;\n\t\tcount: number;\n\t\tlabel: string;\n\t\ticon?: Component;\n\t};\n\n\tlet {\n\t\tcolumn,\n\t\ttitle,\n\t\toptions\n\t}: {\n\t\tcolumn: Column<TData, TValue>;\n\t\ttitle: string;\n\t\toptions?: {\n\t\t\tvalue: string;\n\t\t\tlabel?: string;\n\t\t\ticon?: Component;\n\t\t}[];\n\t} = $props();\n\n\tconst facets = $derived.by(() => {\n\t\tconst f = Array.from(column?.getFacetedUniqueValues());\n\t\tconst newMap: mapData[] = [];\n\t\tfor (let i = 0; i < f.length; i++) {\n\t\t\tconst element = f[i];\n\t\t\tconst d: mapData = {\n\t\t\t\tcount: element[1],\n\t\t\t\tlabel: element[0],\n\t\t\t\tvalue: element[0]\n\t\t\t};\n\n\t\t\tif (options) {\n\t\t\t\tconst found = options.find((x) => x.value === element[0]);\n\t\t\t\tif (found) {\n\t\t\t\t\td.label = found.label ?? d.label;\n\t\t\t\t\td.icon = found.icon;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tnewMap.push(d);\n\t\t}\n\n\t\treturn newMap;\n\t});\n\tconst selectedValues = $derived(new SvelteSet(column?.getFilterValue() as string[]));\n</script>\n\n<Popover.Root>\n\t<Popover.Trigger>\n\t\t{#snippet child({ props })}\n\t\t\t<Button {...props} variant=\"outline\" size=\"sm\" class=\"h-8 border-dashed\">\n\t\t\t\t<CirclePlusIcon />\n\t\t\t\t{title}\n\t\t\t\t{#if selectedValues.size > 0}\n\t\t\t\t\t<Separator orientation=\"vertical\" class=\"mx-2 h-4\" />\n\t\t\t\t\t<Badge variant=\"secondary\" class=\"rounded-sm px-1 font-normal lg:hidden\">\n\t\t\t\t\t\t{selectedValues.size}\n\t\t\t\t\t</Badge>\n\t\t\t\t\t<div class=\"hidden space-x-1 lg:flex\">\n\t\t\t\t\t\t{#if selectedValues.size > 2}\n\t\t\t\t\t\t\t<Badge variant=\"secondary\" class=\"rounded-sm px-1 font-normal\">\n\t\t\t\t\t\t\t\t{selectedValues.size} selected\n\t\t\t\t\t\t\t</Badge>\n\t\t\t\t\t\t{:else}\n\t\t\t\t\t\t\t{#each facets.filter((opt) => selectedValues.has(opt.value)) as option (option)}\n\t\t\t\t\t\t\t\t<Badge variant=\"secondary\" class=\"rounded-sm px-1 font-normal\">\n\t\t\t\t\t\t\t\t\t{option.label}\n\t\t\t\t\t\t\t\t</Badge>\n\t\t\t\t\t\t\t{/each}\n\t\t\t\t\t\t{/if}\n\t\t\t\t\t</div>\n\t\t\t\t{/if}\n\t\t\t</Button>\n\t\t{/snippet}\n\t</Popover.Trigger>\n\t<Popover.Content class=\"w-[200px] p-0\" align=\"start\">\n\t\t<Command.Root>\n\t\t\t<Command.Input placeholder={title} />\n\t\t\t<Command.List>\n\t\t\t\t<Command.Empty>No results found.</Command.Empty>\n\t\t\t\t<Command.Group>\n\t\t\t\t\t{#each facets as option (option)}\n\t\t\t\t\t\t{@const isSelected = selectedValues.has(option.value)}\n\t\t\t\t\t\t<Command.Item\n\t\t\t\t\t\t\tonSelect={() => {\n\t\t\t\t\t\t\t\tif (isSelected) {\n\t\t\t\t\t\t\t\t\tselectedValues.delete(option.value);\n\t\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\t\tselectedValues.add(option.value);\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\tconst filterValues = Array.from(selectedValues);\n\t\t\t\t\t\t\t\tcolumn?.setFilterValue(filterValues.length ? filterValues : undefined);\n\t\t\t\t\t\t\t}}\n\t\t\t\t\t\t>\n\t\t\t\t\t\t\t<div\n\t\t\t\t\t\t\t\tclass={cn(\n\t\t\t\t\t\t\t\t\t'mr-2 flex size-4 items-center justify-center rounded-sm border border-primary',\n\t\t\t\t\t\t\t\t\tisSelected ? 'bg-primary text-primary-foreground' : 'opacity-50 [&_svg]:invisible'\n\t\t\t\t\t\t\t\t)}\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<CheckIcon class=\"size-4\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t{#if option.icon}\n\t\t\t\t\t\t\t\t{@const Icon = option.icon}\n\t\t\t\t\t\t\t\t<Icon class=\"text-muted-foreground\" />\n\t\t\t\t\t\t\t{/if}\n\n\t\t\t\t\t\t\t<span>{option.label}</span>\n\t\t\t\t\t\t\t<span class=\"ml-auto flex size-4 items-center justify-center font-mono text-xs\">\n\t\t\t\t\t\t\t\t{option.count}\n\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t</Command.Item>\n\t\t\t\t\t{/each}\n\t\t\t\t</Command.Group>\n\t\t\t\t{#if selectedValues.size > 0}\n\t\t\t\t\t<Command.Separator />\n\t\t\t\t\t<Command.Group>\n\t\t\t\t\t\t<Command.Item\n\t\t\t\t\t\t\tonSelect={() => column?.setFilterValue(undefined)}\n\t\t\t\t\t\t\tclass=\"justify-center text-center\"\n\t\t\t\t\t\t>\n\t\t\t\t\t\t\tClear filters\n\t\t\t\t\t\t</Command.Item>\n\t\t\t\t\t</Command.Group>\n\t\t\t\t{/if}\n\t\t\t</Command.List>\n\t\t</Command.Root>\n\t</Popover.Content>\n</Popover.Root>\n",
+			"type": "registry:file",
+			"target": "data-grid-faceted/data-table-faceted-filter.svelte"
+		}
+	]
+}
