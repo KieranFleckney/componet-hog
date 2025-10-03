@@ -15,6 +15,6 @@
         <div class="flex flex-col gap-1">
             <h1 class="text-4xl font-bold">Components</h1>
         </div>
-        <Button variant={'ghost'} href="/form">Form</Button>
+        <Button variant={'ghost'} href="/componet-hog/form">Form</Button>
     </div>
 </div>

@@ -52,7 +52,7 @@
             args={[
                 'shadcn-svelte@latest',
                 'add',
-                `${page.url.origin}/r/form.json`,
+                `${page.url.origin}/componet-hog/r/form.json`,
             ]}
         />
     </div>
