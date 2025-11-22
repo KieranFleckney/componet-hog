@@ -98,7 +98,8 @@
 		"name": "generic-field",
 		"type": "registry:ui",
 		"registryDependencies": [
-			"local:form"
+			"local:form",
+			"field"
 		],
 		"relativeUrl": "generic-field.json"
 	},
