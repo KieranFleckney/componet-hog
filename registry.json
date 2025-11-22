@@ -102,23 +102,11 @@
                 },
                 {
                     "type": "registry:file",
-                    "path": "src/lib/registry/ui/form/form-context.svelte.ts"
-                },
-                {
-                    "type": "registry:file",
                     "path": "src/lib/registry/ui/form/form-field-error.svelte"
                 },
                 {
                     "type": "registry:file",
-                    "path": "src/lib/registry/ui/form/form-field-set.svelte"
-                },
-                {
-                    "type": "registry:file",
                     "path": "src/lib/registry/ui/form/form-label.svelte"
-                },
-                {
-                    "type": "registry:file",
-                    "path": "src/lib/registry/ui/form/form-legend.svelte"
                 },
                 {
                     "type": "registry:file",
