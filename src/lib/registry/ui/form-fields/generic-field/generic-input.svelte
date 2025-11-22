@@ -3,6 +3,7 @@
         type BaseInputProps,
         FieldErrors,
         FormDescription,
+        FormField,
         FormLabel,
         type GenericInputProps,
     } from '$lib/registry/ui/form';
@@ -21,15 +22,20 @@
 
 <form.Field name={property}>
     {#snippet children(field)}
-        <div data-slot="form-item" class={cn('space-y-2', restProps.itemClass)}>
+        <FormField
+            aria-invalid={field.state.meta.isValid ? undefined : 'true'}
+            class={restProps.itemClass}
+        >
             {#if custom}
                 {@render custom?.(field)}
             {:else}
                 <FormLabel {context} {property} {field} {...restProps} />
                 {@render control?.(field)}
-                <FormDescription {context} {property} {field} {...restProps} />
+                <FormDescription class={restProps.descriptionClass}>
+                    {restProps.description}
+                </FormDescription>
                 <FieldErrors {context} {property} {field} {...restProps} />
             {/if}
-        </div>
+        </FormField>
     {/snippet}
 </form.Field>

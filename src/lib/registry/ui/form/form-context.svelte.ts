@@ -62,6 +62,5 @@ export type BaseInputProps<T> = {
     labelClass?: string;
     descriptionClass?: string;
     itemClass?: string;
-    errorFieldClass?: string
     errorClass?: string
 };

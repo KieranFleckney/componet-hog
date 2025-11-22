@@ -1,11 +1,13 @@
 <script lang="ts" generics="T">
     import { Checkbox } from '$lib/components/ui/checkbox';
-    import { Label } from '$lib/components/ui/label';
     import {
         type BaseInputProps,
         FieldErrors,
+        FormContent,
         FormDescription,
+        FormField,
         FormLabel,
+        FormTitle,
     } from '$lib/registry/ui/form';
     import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
     import { type WithoutChildrenOrChild } from '$lib/utils';
@@ -24,7 +26,7 @@
 
 <GenericInput {property} {context} {...restProps}>
     {#snippet custom(field)}
-        <Label
+        <!-- <Label
             class="flex items-start gap-3 rounded-lg border p-3 hover:bg-accent/50 has-[[aria-invalid=true]]:border-destructive"
         >
             <Checkbox
@@ -44,6 +46,29 @@
                 <FormDescription {context} {property} {field} {...restProps} />
                 <FieldErrors {context} {property} {field} {...restProps} />
             </div>
-        </Label>
+        </Label> -->
+        <FormLabel {context} {property} {field} {...restProps}>
+            <FormField orientation="horizontal" class={restProps.itemClass}>
+                <FormContent>
+                    <FormTitle>{restProps.label}</FormTitle>
+                    <FormDescription class={restProps.descriptionClass}>
+                        {restProps.description}
+                    </FormDescription>
+                    <FieldErrors {context} {property} {field} {...restProps} />
+                </FormContent>
+                <Checkbox
+                    bind:ref
+                    bind:checked={
+                        () => field.state.value, (e) => field.handleChange(e)
+                    }
+                    name={field.name}
+                    id={field.name}
+                    onblur={field.handleBlur}
+                    class={className}
+                    aria-invalid={field.state.meta.isValid ? undefined : 'true'}
+                    {...restProps}
+                />
+            </FormField>
+        </FormLabel>
     {/snippet}
 </GenericInput>

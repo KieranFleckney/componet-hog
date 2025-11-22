@@ -1,6 +1,7 @@
 <script lang="ts" generics="T">
-    import Label from '$lib/components/ui/label/label.svelte';
+    import { FieldLabel } from '$lib/components/ui/field';
     import { cn } from '$lib/utils';
+    import type { Snippet } from 'svelte';
     import type { BaseInputProps, FieldType } from './form-context.svelte';
 
     let {
@@ -8,22 +9,24 @@
         label,
         labelClass,
         required,
+        children,
     }: {
         field: FieldType<T>;
         required?: boolean | null | undefined;
+        children?: Snippet<[]>;
     } & BaseInputProps<T> = $props();
 </script>
 
-{#if label}
-    <Label
-        data-slot="form-label"
-        aria-invalid={field.state.meta.isValid ? undefined : 'true'}
-        class={cn('aria-invalid:text-destructive', labelClass)}
-        for={field.name}
-    >
+<FieldLabel
+    for={field.name}
+    class={cn('group-aria-[invalid=true]/field:text-destructive', labelClass)}
+>
+    {#if children}
+        {@render children?.()}
+    {:else}
         {label}
         {#if required}
             *
         {/if}
-    </Label>
-{/if}
+    {/if}
+</FieldLabel>

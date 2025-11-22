@@ -3,8 +3,11 @@
     import {
         type BaseInputProps,
         FieldErrors,
+        FormContent,
         FormDescription,
+        FormField,
         FormLabel,
+        FormTitle,
     } from '$lib/registry/ui/form';
     import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
     import { type WithoutChildrenOrChild } from '$lib/utils';
@@ -23,27 +26,28 @@
 
 <GenericInput {property} {context} {...restProps}>
     {#snippet custom(field)}
-        <div
-            class="flex flex-row items-center justify-between rounded-lg border p-4 aria-invalid:border-destructive"
-            aria-invalid={field.state.meta.isValid ? undefined : 'true'}
-        >
-            <div class="space-y-0.5">
-                <FormLabel {context} {property} {field} {...restProps} />
-                <FormDescription {context} {property} {field} {...restProps} />
-                <FieldErrors {context} {property} {field} {...restProps} />
-            </div>
-            <Switch
-                bind:ref
-                bind:checked={
-                    () => field.state.value, (e) => field.handleChange(e)
-                }
-                name={field.name}
-                id={field.name}
-                onblur={field.handleBlur}
-                class={className}
-                aria-invalid={field.state.meta.isValid ? undefined : 'true'}
-                {...restProps}
-            />
-        </div>
+        <FormLabel {context} {property} {field} {...restProps}>
+            <FormField orientation="horizontal" class={restProps.itemClass}>
+                <FormContent>
+                    <FormTitle>{restProps.label}</FormTitle>
+                    <FormDescription class={restProps.descriptionClass}>
+                        {restProps.description}
+                    </FormDescription>
+                    <FieldErrors {context} {property} {field} {...restProps} />
+                </FormContent>
+                <Switch
+                    bind:ref
+                    bind:checked={
+                        () => field.state.value, (e) => field.handleChange(e)
+                    }
+                    name={field.name}
+                    id={field.name}
+                    onblur={field.handleBlur}
+                    class={className}
+                    aria-invalid={field.state.meta.isValid ? undefined : 'true'}
+                    {...restProps}
+                />
+            </FormField>
+        </FormLabel>
     {/snippet}
 </GenericInput>
