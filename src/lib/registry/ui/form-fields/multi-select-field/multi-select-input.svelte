@@ -1,7 +1,7 @@
 <script lang="ts" generics="T,TData">
     import * as Select from '$lib/components/ui/select';
     import type { BaseInputProps } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
     import { type WithElementRef, type WithoutChildren, cn } from '$lib/utils';
     import type { Component, Snippet } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';

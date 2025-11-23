@@ -9,7 +9,7 @@
         FormLabel,
         FormTitle,
     } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
     import { type WithoutChildrenOrChild } from '$lib/utils';
     import { Checkbox as CheckboxPrimitive } from 'bits-ui';
 

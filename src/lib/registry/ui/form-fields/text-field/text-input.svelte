@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
     import Input from '$lib/components/ui/input/input.svelte';
     import type { BaseInputProps } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
     import { type WithElementRef } from '$lib/utils';
     import type {
         HTMLInputAttributes,

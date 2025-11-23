@@ -7,7 +7,6 @@
         FormLabel,
         type GenericInputProps,
     } from '$lib/registry/ui/form';
-    import { cn } from '$lib/utils';
 
     let {
         property,

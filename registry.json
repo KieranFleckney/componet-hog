@@ -102,6 +102,10 @@
                 },
                 {
                     "type": "registry:file",
+                    "path": "src/lib/registry/ui/form/form-context.svelte.ts"
+                },
+                {
+                    "type": "registry:file",
                     "path": "src/lib/registry/ui/form/form-field-error.svelte"
                 },
                 {
@@ -275,11 +279,11 @@
             "files": [
                 {
                     "type": "registry:file",
-                    "path": "src/lib/registry/ui/form-fields/generic-field/index.ts"
+                    "path": "src/lib/registry/ui/generic-field/index.ts"
                 },
                 {
                     "type": "registry:file",
-                    "path": "src/lib/registry/ui/form-fields/generic-field/generic-input.svelte"
+                    "path": "src/lib/registry/ui/generic-field/generic-input.svelte"
                 }
             ]
         },

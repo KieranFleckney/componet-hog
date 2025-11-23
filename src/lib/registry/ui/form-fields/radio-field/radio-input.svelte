@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
     import * as RadioGroup from '$lib/components/ui/radio-group';
     import type { BaseInputProps } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
     import { cn } from '$lib/utils';
     import { RadioGroup as RadioGroupPrimitive } from 'bits-ui';
 

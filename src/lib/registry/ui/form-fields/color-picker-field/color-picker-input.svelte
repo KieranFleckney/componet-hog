@@ -4,7 +4,7 @@
         type ColorPickerProps,
     } from '$lib/registry/ui/color-picker';
     import type { BaseInputProps } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
 
     let {
         property,

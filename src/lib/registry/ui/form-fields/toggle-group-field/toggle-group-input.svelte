@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
     import * as ToggleGroup from '$lib/components/ui/toggle-group';
     import type { BaseInputProps } from '$lib/registry/ui/form';
-    import { GenericInput } from '$lib/registry/ui/form-fields/generic-field';
+    import { GenericInput } from '$lib/registry/ui/generic-field';
     import { ToggleGroup as ToggleGroupPrimitive } from 'bits-ui';
 
     let {
